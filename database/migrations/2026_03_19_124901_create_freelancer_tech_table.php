@@ -17,7 +17,7 @@ return new class extends Migration
                     ->constrained("users")
                     ->cascadeOnDelete()
                     ->cascadeOnUpdate();
-            $table->foreignId("technology")
+            $table->foreignId("technology_id")
                     ->constrained("technologies")
                     ->cascadeOnDelete()
                     ->cascadeOnUpdate();
