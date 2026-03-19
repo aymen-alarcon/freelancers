@@ -3,16 +3,18 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -56,5 +58,13 @@ class User extends Authenticatable
 
     public function reviewsReceived():HasMany{
         return $this->hasMany(Review::class, "target_id");
+    }
+
+    public function freelancerProfile():HasOne{
+        return $this->hasOne(FreeLancerProfile::class, "user_id");
+    }
+
+    public function clientProfile():HasOne{
+        return $this->hasOne(ClientProfile::class, "user_id");
     }
 }

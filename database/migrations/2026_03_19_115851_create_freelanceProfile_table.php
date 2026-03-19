@@ -17,7 +17,6 @@ return new class extends Migration
             $table->float('tarif_journalier');
             $table->string('portfolio');
             $table->string('experience');
-            $table->boolean('disponibilite');
             $table->float('evaluation_moyenne');
             $table->foreignId("user_id")
                     ->constrained("users")

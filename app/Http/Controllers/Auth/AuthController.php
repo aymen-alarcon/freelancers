@@ -59,6 +59,7 @@ class AuthController extends Controller
             "name" => "required",
             "email" => "required|email",
             "password" => "required|confirmed|min:8",
+            "role" => "required|in:admin,freelance,client"
         ]);
 
         $validate["password"] = Hash::make($validate["password"]);
@@ -82,6 +83,5 @@ class AuthController extends Controller
                 "data" => ["user" => $user, "token" => $token],
             ], 201);
         }
-        
     }
 }

@@ -15,6 +15,6 @@ class ClientProfile extends Model
     }
 
     public function missions():HasMany{
-        return $this->hasMany(Mission::class);
+        return $this->hasMany(Mission::class, "client_id");
     }
 }

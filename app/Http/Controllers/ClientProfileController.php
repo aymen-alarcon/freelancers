@@ -28,7 +28,19 @@ class ClientProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $roleValidate = $request->validate([
+            "entreprise" => "required",
+             "description" => "required",
+             "historique_missions" => "required",
+             "user_id" => "required|exists,users.id",
+        ]);
+
+        ClientProfile::create($roleValidate);
+
+        return response()->json([
+            "success" => true,
+            "message" => "your profile have been created successfully",
+        ], 201);
     }
 
     /**

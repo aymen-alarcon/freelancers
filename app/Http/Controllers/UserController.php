@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -12,7 +13,23 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+
+        if ($user->role === "freelance") {
+            return response()->json([
+                "name" => $user->name,
+                "email" => $user->email,
+                "role" => $user->role,
+                "competences" => $user->freelancerProfile->competences,
+                "tarif_journalier" => $user->freelancerProfile->tarif_journalier,
+                "portfolio" => $user->freelancerProfile->portfolio,
+                "experience" => $user->freelancerProfile->experience,
+                "evaluation_moyenne" => $user->freelancerProfile->evaluation_moyenne,
+                "technologies" => $user->freelancerProfile->technologies->pluck("name"),
+            ]);
+            
+        }
+
     }
 
     /**
