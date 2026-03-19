@@ -35,11 +35,16 @@ class FreeLancerProfileController extends Controller
             "portfolio" => "required",
             "experience" => "required",
             "evaluation_moyenne" => "required",
-        ], 201);
+        ]);
 
         $freelanceValidate["user_id"] = Auth::user()->id;
 
         FreeLancerProfile::create($freelanceValidate);
+        
+        return response()->json([
+            "success" => true,
+            "message" => "your profile have been created successfully",
+        ], 201);
     }
 
     /**

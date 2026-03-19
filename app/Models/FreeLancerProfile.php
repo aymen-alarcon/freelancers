@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class FreeLancerProfile extends Model
 {
+    protected $table = 'freelanceprofile';
     protected $fillable = ["competences", "tarif_journalier", "portfolio", "experience", "evaluation_moyenne", "user_id"];
 
     public function technologies():BelongsToMany{

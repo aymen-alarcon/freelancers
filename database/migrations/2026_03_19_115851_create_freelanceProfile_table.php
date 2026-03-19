@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('FreelanceProfile', function (Blueprint $table) {
             $table->id();
-            $table->string('competences');
-            $table->float('tarif_journalier');
-            $table->string('portfolio');
-            $table->string('experience');
-            $table->float('evaluation_moyenne');
+            $table->string('competences')->nullable();
+            $table->float('tarif_journalier')->nullable();
+            $table->string('portfolio')->nullable();
+            $table->string('experience')->nullable();
+            $table->float('evaluation_moyenne')->nullable();
             $table->foreignId("user_id")
                     ->constrained("users")
                     ->cascadeOnDelete()

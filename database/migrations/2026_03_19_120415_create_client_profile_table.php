@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('clientProfile', function (Blueprint $table) {
             $table->id();
-            $table->string("entreprise");
-            $table->string("description");
-            $table->string("historique_missions");
+            $table->string("entreprise")->nullable();
+            $table->string("description")->nullable();
+            $table->string("historique_missions")->nullable();
             $table->foreignId("user_id")
                     ->constrained("users")
                     ->cascadeOnDelete()

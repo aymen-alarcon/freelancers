@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClientProfile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,9 +28,16 @@ class UserController extends Controller
                 "evaluation_moyenne" => $user->freelancerProfile->evaluation_moyenne,
                 "technologies" => $user->freelancerProfile->technologies->pluck("name"),
             ]);
-            
+        }else if($user->role === "client"){
+            return response()->json([
+                "name" => $user->name,
+                "email" => $user->email,
+                "role" => $user->role,
+                "entreprise" => $user->clientProfile->entreprise,
+                "description" => $user->clientProfile->description,
+                "historique_missions" => $user->clientProfile->missions->pluck("title"),
+            ]);
         }
-
     }
 
     /**
