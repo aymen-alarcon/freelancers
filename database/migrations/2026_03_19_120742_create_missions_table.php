@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->float('budget');
-            $table->dateTime('duree');
+            $table->string('duree');
             $table->enum('type', ["web","mobile","desktop"]);
             $table->string('status');
             $table->foreignId("client_id")

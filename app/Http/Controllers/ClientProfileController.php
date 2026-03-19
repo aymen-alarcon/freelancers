@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ClientProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientProfileController extends Controller
 {
@@ -30,10 +31,11 @@ class ClientProfileController extends Controller
     {
         $roleValidate = $request->validate([
             "entreprise" => "required",
-             "description" => "required",
-             "historique_missions" => "required",
-             "user_id" => "required|exists,users.id",
+            "description" => "required",
+            "historique_missions" => "required",
         ]);
+
+        $roleValidate["user_id"] = Auth::user()->id;
 
         ClientProfile::create($roleValidate);
 
