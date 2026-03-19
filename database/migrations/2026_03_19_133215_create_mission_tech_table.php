@@ -11,20 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('missions', function (Blueprint $table) {
+        Schema::create('mission_tech', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('description');
-            $table->float('budget');
-            $table->dateTime('duree');
-            $table->enum('type', ["web","mobile","desktop"]);
-            $table->string('status');
-            $table->foreignId("client_id")
-                    ->constrained("users")
+            $table->foreignId("mission_id")
+                    ->constrained("missions")
                     ->cascadeOnDelete()
                     ->cascadeOnUpdate();
-            $table->foreignId("category_id")
-                    ->constrained("categories")
+            $table->foreignId("technology_id")
+                    ->constrained("technologies")
                     ->cascadeOnDelete()
                     ->cascadeOnUpdate();
             $table->timestamps();
@@ -36,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('missions');
+        Schema::dropIfExists('mission_tech');
     }
 };
