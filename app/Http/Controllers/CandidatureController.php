@@ -70,16 +70,23 @@ class CandidatureController extends Controller
      */
     public function update(Request $request, Candidature $candidature)
     {
-        $validate = $request->validate([
-            "status" => "required|in:accepted,refused,on hold",
-        ]);
+        if(Auth::user()->role === "client"){
+            $validate = $request->validate([
+                "status" => "required|in:accepted,refused,on hold",
+            ]);
 
-        $candidature->update($validate);
+            $candidature->update($validate);
 
-        return response()->json([
-            "success" => true,
-            "data" => $candidature,
-        ]);
+            return response()->json([
+                "success" => true,
+                "data" => $candidature,
+            ]);        
+        }else{
+            return response()->json([
+                "success" => false,
+                "message" => "Only clients can do that"
+            ]);        
+        }
     }
 
     /**

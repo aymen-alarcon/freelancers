@@ -5,6 +5,7 @@ use App\Http\Controllers\CandidatureController;
 use App\Http\Controllers\ClientProfileController;
 use App\Http\Controllers\FreeLancerProfileController;
 use App\Http\Controllers\MissionController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,5 @@ Route::middleware("auth:sanctum")->group(function(){
     Route::post("Mission/create", [MissionController::class, "store"]);
     Route::post("Mission/{mission}/Candidature/create", [CandidatureController::class, "store"]);
     Route::put("Mission/Candidature/{candidature}/update", [CandidatureController::class, "update"]);
+    Route::post("Freelancer/{freelancer}/Rating", [ReviewController::class, "store"]);
 });

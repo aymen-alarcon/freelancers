@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Review extends Model
 {
-    protected $fillable = ["rating", "comment", "author_id", "target_id", "mission_id"];
+    protected $fillable = ["rating", "author_id", "target_id"];
 
     public function author():BelongsTo{
         return $this->belongsTo(User::class, "author_id");
