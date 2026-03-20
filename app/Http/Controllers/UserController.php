@@ -77,7 +77,24 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        if (Auth::user()->role === "admin") {
+            $validate = $request->validate([
+                "is_active" => "required|boolean",
+            ]);
+
+            $user->update($validate);
+
+            return response()->json([
+                "status" => true,
+                "message" => "You have just updated this user successfully",
+            ]);
+        } else {
+            return response()->json([
+                "status" => false,
+                "message" => "Only admins can update users",
+            ]);
+        }
+        
     }
 
     /**
@@ -85,6 +102,19 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        if (Auth::user()->role === "admin") {
+            $user->delete();
+
+            return response()->json([
+                "success" => true,
+                "message" => "You have just deleted a user successfully",
+            ]);
+        } else {
+            return response()->json([
+                "success" => false,
+                "message" => "Only admins can update users",
+            ]);
+        }
+        
     }
 }

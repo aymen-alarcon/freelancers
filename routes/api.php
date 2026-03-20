@@ -20,4 +20,5 @@ Route::middleware("auth:sanctum")->group(function(){
     Route::post("Mission/{mission}/Candidature/create", [CandidatureController::class, "store"]);
     Route::put("Mission/Candidature/{candidature}/update", [CandidatureController::class, "update"]);
     Route::post("Freelancer/{freelancer}/Rating", [ReviewController::class, "store"]);
+    Route::put("Users/{user}/update", [UserController::class, "update"]);
 });
