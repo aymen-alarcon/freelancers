@@ -36,8 +36,8 @@ class MissionController extends Controller
                 "budget" => "required|numeric",
                 "duree" => "required",
                 "type" => "required|in:web,mobile,desktop",
-                "status" => "required",
-                "category_id" => "required|exists:categories,id",
+                "status" => "required|in:Ouverte,En cours,Terminée,Annulée",
+                "category" => "required|in:Développement Web,Développement Mobile,Développement Desktop,Full-Stack,DevOps,UI/UX",
             ]);
 
             $validate["client_id"] = Auth::user()->id;
