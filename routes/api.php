@@ -17,4 +17,5 @@ Route::middleware("auth:sanctum")->group(function(){
     Route::get("Profile", [UserController::class, "index"]);
     Route::post("Mission/create", [MissionController::class, "store"]);
     Route::post("Mission/{mission}/Candidature/create", [CandidatureController::class, "store"]);
+    Route::put("Mission/Candidature/{candidature}/update", [CandidatureController::class, "update"]);
 });

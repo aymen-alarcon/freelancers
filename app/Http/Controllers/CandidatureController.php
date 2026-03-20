@@ -70,7 +70,16 @@ class CandidatureController extends Controller
      */
     public function update(Request $request, Candidature $candidature)
     {
-        //
+        $validate = $request->validate([
+            "status" => "required|in:accepted,refused,on hold",
+        ]);
+
+        $candidature->update($validate);
+
+        return response()->json([
+            "success" => true,
+            "data" => $candidature,
+        ]);
     }
 
     /**
