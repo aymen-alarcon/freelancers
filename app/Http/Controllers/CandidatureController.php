@@ -9,25 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CandidatureController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request, Mission $mission)
     {
         $validate = $request->validate([
@@ -49,25 +30,7 @@ class CandidatureController extends Controller
         ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Candidature $candidature)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Candidature $candidature)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Candidature $candidature)
     {
         if(Auth::user()->role === "client"){
@@ -87,13 +50,5 @@ class CandidatureController extends Controller
                 "message" => "Only clients can do that"
             ]);        
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Candidature $candidature)
-    {
-        //
     }
 }
