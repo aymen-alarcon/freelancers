@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Candidature extends Model
 {
-    protected $fillable = ["mission_id", "freelancer_id", "lettre_de_motivation", "tarif_proposer", "status"];
+    protected $fillable = ["mission_id", "freelancer_id", "lettre_de_motivation", "tarif_propose", "status"];
 
     public function mission():BelongsTo{
         return $this->belongsTo(Mission::class, "mission_id");

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CandidatureController;
 use App\Http\Controllers\ClientProfileController;
 use App\Http\Controllers\FreeLancerProfileController;
 use App\Http\Controllers\MissionController;
@@ -15,4 +16,5 @@ Route::middleware("auth:sanctum")->group(function(){
     Route::post("Client/Profile/Register", [ClientProfileController::class, "store"]);
     Route::get("Profile", [UserController::class, "index"]);
     Route::post("Mission/create", [MissionController::class, "store"]);
+    Route::post("Mission/{mission}/Candidature/create", [CandidatureController::class, "store"]);
 });
