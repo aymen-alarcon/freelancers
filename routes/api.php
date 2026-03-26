@@ -22,5 +22,5 @@ Route::middleware("auth:sanctum")->group(function(){
     Route::post("Freelancer/{freelancer}/Rating", [ReviewController::class, "store"]);
     Route::put("Users/{user}/update", [UserController::class, "update"]);
     Route::delete("Users/{user}/delete", [UserController::class, "destroy"]);
-    Route::get("dashboard", [UserController::class, "dashboard"]);
+    Route::get("Dashboard", [UserController::class, "dashboard"]);
 });
