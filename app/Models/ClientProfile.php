@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ClientProfile extends Model
 {
+    protected $table = "clients_profile"; 
     protected $fillable = ["entreprise", "description", "historique_missions", "user_id"];
 
     public function user():BelongsTo{

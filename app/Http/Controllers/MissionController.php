@@ -2,28 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Mission;
+use App\Http\Services\MissionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MissionController extends Controller
 {
+    protected $service;
+
+    public function __construct(MissionService $service)
+    {
+        $this->service = $service;
+    }
     public function store(Request $request)
     {
         if(Auth::user()->role === "client"){
-            $validate = $request->validate([
-                "title" => "required|string|max:12",
-                "description" => "required|string|max:500",
-                "budget" => "required|numeric",
-                "duree" => "required",
-                "type" => "required|in:web,mobile,desktop",
-                "status" => "required|in:Ouverte,En cours,Terminée,Annulée",
-                "category" => "required|in:Développement Web,Développement Mobile,Développement Desktop,Full-Stack,DevOps,UI/UX",
-            ]);
-
-            $validate["client_id"] = Auth::user()->id;
-
-            $mission = Mission::create($validate);
+            $mission = $this->service->createMission($request);
 
             return response()->json([
                 "success" => true,

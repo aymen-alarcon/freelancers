@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClientProfile;
+use App\Http\Services\ClientProfileService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ClientProfileController extends Controller
 {
+    protected $service;
+
+    public function __construct(ClientProfileService $service)
+    {
+        $this->service = $service;
+    }
+
     public function store(Request $request)
     {
-        $roleValidate = $request->validate([
-            "entreprise" => "required",
-            "description" => "required",
-            "historique_missions" => "required",
-        ]);
-
-        $roleValidate["user_id"] = Auth::user()->id;
-
-        ClientProfile::create($roleValidate);
+        $this->service->createClientProfile($request);
 
         return response()->json([
             "success" => true,

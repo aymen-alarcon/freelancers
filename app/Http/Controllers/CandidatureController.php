@@ -6,22 +6,20 @@ use App\Models\Candidature;
 use App\Models\Mission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Services\CandidatureService;
 
 class CandidatureController extends Controller
 {
+    protected $service;
+
+    public function __construct(CandidatureService $service)
+    {
+        $this->service = $service;
+    }
+
     public function store(Request $request, Mission $mission)
     {
-        $validate = $request->validate([
-            "lettre_de_motivation" => "required|file|max:10240",
-            "tarif_propose" => "required|numeric|min:0",
-        ]);
-
-        $validate["lettre_de_motivation"] = $request->file("lettre_de_motivation")->store("files", "public");
-        $validate["status"] = "on hold";
-        $validate["freelancer_id"] = Auth::user()->id;
-        $validate["mission_id"] = $mission->id;
-
-        $candidature = Candidature::create($validate);
+        $candidature = $this->service->createCandidature($request, $mission);
 
         return response()->json([
             "success" => true,
@@ -30,25 +28,20 @@ class CandidatureController extends Controller
         ], 201);
     }
 
-
     public function update(Request $request, Candidature $candidature)
     {
-        if(Auth::user()->role === "client"){
-            $validate = $request->validate([
-                "status" => "required|in:accepted,refused,on hold",
-            ]);
-
-            $candidature->update($validate);
-
-            return response()->json([
-                "success" => true,
-                "data" => $candidature,
-            ]);        
-        }else{
+        if (Auth::user()->role !== "client") {
             return response()->json([
                 "success" => false,
                 "message" => "Only clients can do that"
-            ]);        
+            ]);
         }
+
+        $updated = $this->service->updateCandidature($request, $candidature);
+
+        return response()->json([
+            "success" => true,
+            "data" => $updated,
+        ]);
     }
 }

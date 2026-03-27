@@ -2,25 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FreeLancerProfile;
+use App\Http\Services\FreeLancerProfileService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class FreeLancerProfileController extends Controller
 {
+    protected $service;
+
+    public function __construct(FreeLancerProfileService $service)
+    {
+        $this->service = $service;    
+    }
+
     public function store(Request $request)
     {
-        $freelanceValidate = $request->validate([
-            "competences" => "required",
-            "tarif_journalier" => "required",
-            "portfolio" => "required",
-            "experience" => "required",
-            "evaluation_moyenne" => "required",
-        ]);
-
-        $freelanceValidate["user_id"] = Auth::user()->id;
-
-        FreeLancerProfile::create($freelanceValidate);
+        $this->service->createFreelancerProfile($request);
         
         return response()->json([
             "success" => true,

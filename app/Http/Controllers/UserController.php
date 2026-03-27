@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Candidature;
-use App\Models\ClientProfile;
-use App\Models\Mission;
 use App\Models\User;
+use App\Http\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    protected $service;
+
+    public function __construct(UserService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -35,9 +40,9 @@ class UserController extends Controller
                 "name" => $user->name,
                 "email" => $user->email,
                 "role" => $user->role,
-                "entreprise" => $user->clientProfile->entreprise,
-                "description" => $user->clientProfile->description,
-                "historique_missions" => $user->clientProfile->missions->pluck("title"),
+                "entreprise" => $user->clientProfile?->entreprise,
+                "description" => $user->clientProfile?->description,
+                "historique_missions" => $user->clientProfile?->missions->pluck("title"),
             ]);
         }
     }
@@ -47,16 +52,14 @@ class UserController extends Controller
      */
     public function dashboard()
     {
-        $usersCount = User::all()->count();
-        $missions = Mission::all();
-        $candidatures = Candidature::all();
+        $data = $this->service->dashboard();
 
         return response()->json([
             "success" => true,
             "data" => [
-                "users count" => $usersCount,
-                "missions" => $missions,
-                "candidatures" => $candidatures,
+                "users count" => $data["users_count"],
+                "missions" => $data["missions"],
+                "candidatures" => $data["candidatures"],
             ]
         ]);
     }
@@ -67,11 +70,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         if (Auth::user()->role === "admin") {
-            $validate = $request->validate([
-                "is_active" => "required|boolean",
-            ]);
-
-            $user->update($validate);
+            $this->service->updateStatus($request, $user);
 
             return response()->json([
                 "status" => true,
